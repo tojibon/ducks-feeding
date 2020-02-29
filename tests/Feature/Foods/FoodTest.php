@@ -35,10 +35,11 @@ class FoodTest extends TestCase
         $response->assertJsonStructure([
             '*' => [
                 'id',
-                'food_type_id',
-                'name',
-                'created_at',
-                'updated_at',
+                'type' => [
+                    'id',
+                    'name'
+                ],
+                'name'
             ]
         ]);
     }
