@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3bb4dacacf43532a01bf1d3d6dd3bbe1",
+    "content-hash": "4d1f0d1386b7ac5d10b2db4b9ba43361",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1053,6 +1053,69 @@
                 "serialize"
             ],
             "time": "2019-11-29T22:36:02+00:00"
+        },
+        {
+            "name": "orkhanahmadov/eloquent-repository",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/orkhanahmadov/eloquent-repository.git",
+                "reference": "2124dfc73a299bc30bb2a04b582b6f4f4498ca76"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/orkhanahmadov/eloquent-repository/zipball/2124dfc73a299bc30bb2a04b582b6f4f4498ca76",
+                "reference": "2124dfc73a299bc30bb2a04b582b6f4f4498ca76",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "5.5.*|5.8.*|^6.0",
+                "illuminate/container": "5.5.*|5.8.*|^6.0",
+                "illuminate/contracts": "5.5.*|5.8.*|^6.0",
+                "illuminate/database": "5.5.*|5.8.*|^6.0",
+                "illuminate/support": "5.5.*|5.8.*|^6.0",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "3.5.*|3.8.*|^4.0",
+                "phpunit/phpunit": "^6.0|^7.0|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Orkhanahmadov\\EloquentRepository\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Orkhanahmadov\\EloquentRepository\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Orkhan Ahmadov",
+                    "email": "ahmadov90@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Eloquent Repository for Laravel",
+            "homepage": "https://github.com/orkhanahmadov/eloquent-repository",
+            "keywords": [
+                "eloquent",
+                "eloquent-repository",
+                "eloquent-repository-generator",
+                "laravel-repository",
+                "model",
+                "repository",
+                "repository-generator"
+            ],
+            "time": "2019-09-19T14:23:53+00:00"
         },
         {
             "name": "paragonie/random_compat",
