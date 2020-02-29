@@ -71,7 +71,8 @@
                 </div>
 
                 <div class="links">
-                    <a href="{{route('feedings')}}">Feed Your Duck</a>
+                    <a href="{{route('feedings.submit')}}">Feed Your Duck</a>
+                    <a href="{{route('feedings.overview')}}">Daily Updates</a>
                     <a href="https://github.com/tojibon/ducks-feeding">Open Source</a>
                 </div>
             </div>

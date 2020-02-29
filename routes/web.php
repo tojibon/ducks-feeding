@@ -15,4 +15,11 @@ Route::get('/', ['as'=>'home', function () {
     return view('welcome');
 }]);
 
-Route::get('feedings', ['as' => 'feedings', 'uses' => 'FeedingsController@index']);
+Route::prefix('feedings')->name('feedings.')->group(function () {
+    Route::get('index', ['as' => 'home', 'uses' => 'FeedingsController@index']);
+    Route::get('overview', ['as' => 'overview', 'uses' => 'FeedingsController@index']);
+    Route::get('submit', ['as' => 'submit', 'uses' => 'FeedingsController@create']);
+    Route::post('submit', ['as' => 'submit', 'uses' => 'FeedingsController@store']);
+});
+
+Route::get('foods', ['as' => 'foods', 'uses' => 'FoodsController']);

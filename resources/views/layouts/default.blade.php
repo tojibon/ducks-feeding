@@ -29,7 +29,10 @@
                                     <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{route('feedings')}}">Feed Your Duck</a>
+                                    <a class="nav-link" href="{{route('feedings.overview')}}">Daily Updates</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{route('feedings.submit')}}">Feed Your Duck</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -41,11 +44,18 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 pt-5">
                     @yield('content')
                 </div>
             </div>
 
         </div>
+
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+
+        @yield('scripts')
     </body>
 </html>
