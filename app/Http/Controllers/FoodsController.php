@@ -6,6 +6,7 @@ use App\Http\Requests\Foods\IndexRequest;
 use App\Http\Resources\FoodResource;
 use App\Repositories\Contracts\FoodRepository;
 use Illuminate\Http\Response;
+use Orkhanahmadov\EloquentRepository\Repository\Eloquent\Criteria\EagerLoad;
 use Orkhanahmadov\EloquentRepository\Repository\Eloquent\Criteria\OrderBy;
 
 class FoodsController extends Controller
@@ -27,6 +28,7 @@ class FoodsController extends Controller
     public function __invoke(IndexRequest $request)
     {
         $foods = $this->foods->withCriteria(
+            new EagerLoad('food_type'),
             new OrderBy('name', 'asc')
         )->filter($request->validated());
 
