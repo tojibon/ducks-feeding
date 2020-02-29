@@ -20,6 +20,11 @@ class Feeding extends Model
         'daily_recurring' => 'boolean'
     ];
 
+    public function scopeRecurring($query)
+    {
+        return $query->where('daily_recurring', '1')->whereRaw("DATE(CURDATE()) > DATE(feeding_time)");
+    }
+
     public function food_type()
     {
         return $this->belongsTo(FoodType::class);
