@@ -36,6 +36,7 @@
                         <div class="form-group">
                             <label for="feeding_time">Time</label>
                             <input type="datetime-local" class="form-control" id="feeding_time" name="feeding_time"
+                                   value="{{old('feeding_time')}}"
                                    placeholder="When you feed your ducks?">
                         </div>
                         <div class="form-group">
@@ -77,15 +78,21 @@
                         <div class="form-group">
                             <label for="total_ducks">Total Ducks</label>
                             <input type="number" class="form-control" name="total_ducks" id="total_ducks"
+                                   value="{{old('total_ducks')}}"
                                    placeholder="Number of ducks you fed?">
                         </div>
                         <div class="form-group">
                             <label for="amount_foods">Amount of foods</label>
                             <input type="text" class="form-control" name="amount_foods" id="amount_foods"
+                                   value="{{old('amount_foods')}}"
                                    placeholder="Total weight of your foods?">
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="daily_recurring">
+                            <input type="checkbox" class="form-check-input" name="daily_recurring" id="daily_recurring"
+                                   value="1"
+                                   @if (old('daily_recurring'))
+                                   checked="checked"
+                                @endif />
                             <label class="form-check-label" for="daily_recurring">Is Recurring</label>
                             <small id="daily_recurring_help" class="form-text text-muted">Check this only if you want to
                                 automate this for everyday.</small>
@@ -112,7 +119,7 @@
                         console.log(data);
                         var select_food_id = $('#food_id');
                         select_food_id.find('option').remove();
-                        $.each(data, function(value, food) {
+                        $.each(data, function (value, food) {
                             select_food_id.append($('<option />', {value: food.id, text: food.name}));
                         });
                     })
