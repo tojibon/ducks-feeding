@@ -28,7 +28,7 @@ class CreateFeedingsTable extends Migration
 
             $table->integer('total_ducks')->default(0);
             $table->float('amount_foods')->default(0);
-            $table->dateTime('feeding_time')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->dateTime('feeding_time')->nullable();
             $table->boolean('daily_recurring')->default(false);
 
             $table->timestamps();
