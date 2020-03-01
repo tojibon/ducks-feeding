@@ -15,6 +15,7 @@ class IndexRequest extends FormRequest
             'display_all' => 'nullable',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date',
+            'per_page' => 'nullable|integer',
         ];
     }
 }

@@ -48,6 +48,9 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <input type="number" name="per_page" id="per_page" class="form-control" value="{{app('request')->input('per_page', 10)}}" />
+                    </div>
                     <input type="text" name="dates" value="{{ date('m-d-Y', strtotime(app('request')->input('start_date', date('Y-m-d')))) }} - {{ date('m-d-Y', strtotime(app('request')->input('end_date', date('Y-m-d')))) }}" class="form-control">
                 </form>
             </div>
@@ -109,8 +112,22 @@
         <div class="col-md-12">
             <div class="row">{{ $records->links() }}</div>
         </div>
+        <div class="col-md-12">
+            <div class="row">
+                <h4 class="mt-5">Graph View</h4>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            </div>
+        </div>
     </div>
 @stop
+
+<script>
+    var records = <?php echo json_encode($records); ?>;
+</script>
 
 @section('scripts')
     <script>
@@ -143,6 +160,7 @@
                 current_query_string_append.push('food_type_id=' + $('#food_type_id').val());
                 current_query_string_append.push('food_id=' + $('#food_id').val());
                 current_query_string_append.push('location_id=' + $('#location_id').val());
+                current_query_string_append.push('per_page=' + $('#per_page').val());
 
                 if (current_query_string[1]) {
                     var current_query_arr = current_query_string[1].split('&');
@@ -158,6 +176,68 @@
 
                 console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
             });
+
+            var total_ducks = [];
+            var total_feed = [];
+            var average_feed = [];
+            for(var i=0; i<records.length; i++) {
+                total_ducks.push({ x: new Date(moment(records[i]['feeding_time']).format('YYYY,MM,DD')), y: records[i]['total_ducks'] });
+                total_feed.push({ x: new Date(moment(records[i]['feeding_time']).format('YYYY,MM,DD')), y: records[i]['amount_foods'] });
+                average_feed.push({ x: new Date(moment(records[i]['feeding_time']).format('YYYY,MM,DD')), y: parseFloat(records[i]['total_ducks'] / records[i]['amount_foods']) });
+            }
+
+                var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title:{
+                    text: "Daily Ducks Feeding Around The World"
+                },
+                axisX: {
+                    valueFormatString: "DD MMM,YY"
+                },
+                axisY: {
+                    title: "Total Feed",
+                    includeZero: true
+                },
+                legend:{
+                    cursor: "pointer",
+                    fontSize: 16,
+                    itemclick: toggleDataSeries
+                },
+                toolTip:{
+                    shared: true
+                },
+                data: [{
+                    name: "Total Ducks",
+                    type: "spline",
+                    showInLegend: true,
+                    dataPoints: total_ducks
+                },
+                    {
+                        name: "Total Feed",
+                        type: "spline",
+                        yValueFormatString: "#0.## KG",
+                        showInLegend: true,
+                        dataPoints: total_feed
+                    },
+                    {
+                        name: "Average Feed",
+                        type: "spline",
+                        yValueFormatString: "#0.## KG",
+                        showInLegend: true,
+                        dataPoints: average_feed
+                    }]
+            });
+            chart.render();
+
+            function toggleDataSeries(e){
+                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                }
+                else{
+                    e.dataSeries.visible = true;
+                }
+                chart.render();
+            }
         });
     </script>
 @stop
