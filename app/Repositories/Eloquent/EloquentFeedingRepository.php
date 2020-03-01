@@ -27,6 +27,6 @@ class EloquentFeedingRepository extends EloquentRepository implements FeedingRep
             $this->entity = $this->entity->whereRaw("DATE(CURDATE()) = DATE(feeding_time)");
         }
 
-        return $this->entity->get();
+        return $this->entity->paginate(10);
     }
 }

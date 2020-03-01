@@ -44,6 +44,7 @@
                         @endforelse
                     </tbody>
                 </table>
+                {{ $records->links() }}
             </div>
         </div>
     </div>
