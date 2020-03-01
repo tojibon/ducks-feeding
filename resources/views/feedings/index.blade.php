@@ -67,14 +67,19 @@
                     </tr>
                     </thead>
                     <tbody>
+                        @php($total_ducks = 0)
+                        @php($total_foods = 0)
+                        @php($average_foods = 0)
                         @forelse($records as $key=>$record)
+                            @php($total_ducks+= $record->total_ducks)
+                            @php($total_foods+= $record->amount_foods)
                             <tr>
                                 <td>{{$record->food_type->name}}</td>
                                 <td>{{$record->food->name}}</td>
                                 <td>{{$record->location->name}}</td>
                                 <td>{{$record->feeding_time}}</td>
-                                <td class="text-right">{{$record->total_ducks}}</td>
-                                <td class="text-right">{{$record->amount_foods}}</td>
+                                <td class="text-right">{{number_format($record->total_ducks, 2)}}</td>
+                                <td class="text-right">{{number_format($record->amount_foods, 2)}}</td>
                                 <td class="text-right">{{number_format(($record->total_ducks / $record->amount_foods), 2)}}</td>
                             </tr>
                         @empty
@@ -85,6 +90,16 @@
                             </tr>
                         @endforelse
                     </tbody>
+                    @if($records && $total_foods > 0)
+                    <tfoot>
+                    <tr>
+                        <td colspan="4" class="text-right"><strong>Total:</strong></td>
+                        <td class="text-right"><strong>{{number_format($total_ducks, 2)}}</strong></td>
+                        <td class="text-right"><strong>{{number_format($total_foods, 2)}}</strong></td>
+                        <td class="text-right"><strong>{{number_format(($total_ducks / $total_foods), 2)}}</strong></td>
+                    </tr>
+                    </tfoot>
+                    @endif
                 </table>
                 {{ $records->links() }}
             </div>
