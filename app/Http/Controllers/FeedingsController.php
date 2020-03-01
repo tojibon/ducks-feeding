@@ -15,6 +15,7 @@ use App\Repositories\Contracts\LocationRepository;
 use Illuminate\Http\Request;
 use Orkhanahmadov\EloquentRepository\Repository\Eloquent\Criteria\EagerLoad;
 use Orkhanahmadov\EloquentRepository\Repository\Eloquent\Criteria\OrderBy;
+use Symfony\Component\Console\Input\Input;
 
 class FeedingsController extends Controller
 {
