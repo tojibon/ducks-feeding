@@ -101,8 +101,13 @@
                     </tfoot>
                     @endif
                 </table>
-                {{ $records->links() }}
             </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row"><strong>Total #: </strong>{{ $records->total() }} records</div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">{{ $records->links() }}</div>
         </div>
     </div>
 @stop
