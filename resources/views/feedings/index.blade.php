@@ -49,9 +49,12 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="number" name="per_page" id="per_page" class="form-control" value="{{app('request')->input('per_page', 10)}}" />
+                        <input type="number" name="per_page" id="per_page" class="form-control"
+                               value="{{app('request')->input('per_page', 10)}}"/>
                     </div>
-                    <input type="text" name="dates" value="{{ date('m-d-Y', strtotime(app('request')->input('start_date', date('Y-m-d')))) }} - {{ date('m-d-Y', strtotime(app('request')->input('end_date', date('Y-m-d')))) }}" class="form-control">
+                    <input type="text" name="dates"
+                           value="{{ date('m-d-Y', strtotime(app('request')->input('start_date', date('Y-m-d')))) }} - {{ date('m-d-Y', strtotime(app('request')->input('end_date', date('Y-m-d')))) }}"
+                           class="form-control">
                 </form>
             </div>
         </div>
@@ -70,38 +73,39 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @php($total_ducks = 0)
-                        @php($total_foods = 0)
-                        @php($average_foods = 0)
-                        @forelse($records as $key=>$record)
-                            @php($total_ducks+= $record->total_ducks)
-                            @php($total_foods+= $record->amount_foods)
-                            <tr>
-                                <td>{{$record->food_type->name}}</td>
-                                <td>{{$record->food->name}}</td>
-                                <td>{{$record->location->name}}</td>
-                                <td>{{$record->feeding_time}}</td>
-                                <td class="text-right">{{number_format($record->total_ducks, 2)}}</td>
-                                <td class="text-right">{{number_format($record->amount_foods, 2)}}</td>
-                                <td class="text-right">{{number_format(($record->total_ducks / $record->amount_foods), 2)}}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" class="text-center">
-                                    <p>No duck feeding for today!</p>
-                                </td>
-                            </tr>
-                        @endforelse
+                    @php($total_ducks = 0)
+                    @php($total_foods = 0)
+                    @php($average_foods = 0)
+                    @forelse($records as $key=>$record)
+                        @php($total_ducks+= $record->total_ducks)
+                        @php($total_foods+= $record->amount_foods)
+                        <tr>
+                            <td>{{$record->food_type->name}}</td>
+                            <td>{{$record->food->name}}</td>
+                            <td>{{$record->location->name}}</td>
+                            <td>{{$record->feeding_time}}</td>
+                            <td class="text-right">{{number_format($record->total_ducks, 2)}}</td>
+                            <td class="text-right">{{number_format($record->amount_foods, 2)}}</td>
+                            <td class="text-right">{{number_format(($record->total_ducks / $record->amount_foods), 2)}}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                <p>No duck feeding for today!</p>
+                            </td>
+                        </tr>
+                    @endforelse
                     </tbody>
                     @if($records && $total_foods > 0)
-                    <tfoot>
-                    <tr>
-                        <td colspan="4" class="text-right"><strong>Total:</strong></td>
-                        <td class="text-right"><strong>{{number_format($total_ducks, 2)}}</strong></td>
-                        <td class="text-right"><strong>{{number_format($total_foods, 2)}}</strong></td>
-                        <td class="text-right"><strong>{{number_format(($total_ducks / $total_foods), 2)}}</strong></td>
-                    </tr>
-                    </tfoot>
+                        <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-right"><strong>Total:</strong></td>
+                            <td class="text-right"><strong>{{number_format($total_ducks, 2)}}</strong></td>
+                            <td class="text-right"><strong>{{number_format($total_foods, 2)}}</strong></td>
+                            <td class="text-right"><strong>{{number_format(($total_ducks / $total_foods), 2)}}</strong>
+                            </td>
+                        </tr>
+                        </tfoot>
                     @endif
                 </table>
             </div>
@@ -126,7 +130,7 @@
 @stop
 
 <script>
-    var records = <?php echo json_encode($records); ?>;
+    var records = <?php echo json_encode($graph_records); ?>;
 </script>
 
 @section('scripts')
@@ -151,7 +155,7 @@
 
             $('input[name="dates"]').daterangepicker({
                 opens: 'left'
-            }, function(start, end, label) {
+            }, function (start, end, label) {
                 $('input[name="dates"]').val(start + ' - ' + end);
                 var start_date = start.format('YYYY-MM-DD');
                 var end_date = end.format('YYYY-MM-DD');
@@ -164,7 +168,7 @@
 
                 if (current_query_string[1]) {
                     var current_query_arr = current_query_string[1].split('&');
-                    for(var i=0; i<current_query_arr.length; i++) {
+                    for (var i = 0; i < current_query_arr.length; i++) {
                         if (current_query_arr[i].indexOf('date') > 0 || current_query_arr[i].indexOf('id') > 0 || current_query_arr[i].indexOf('page') > 0) {
                         } else {
                             current_query_string_append.push(current_query_arr[i]);
@@ -180,15 +184,24 @@
             var total_ducks = [];
             var total_feed = [];
             var average_feed = [];
-            for(var i=0; i<records.length; i++) {
-                total_ducks.push({ x: new Date(moment(records[i]['feeding_time']).format('YYYY,MM,DD')), y: records[i]['total_ducks'] });
-                total_feed.push({ x: new Date(moment(records[i]['feeding_time']).format('YYYY,MM,DD')), y: records[i]['amount_foods'] });
-                average_feed.push({ x: new Date(moment(records[i]['feeding_time']).format('YYYY,MM,DD')), y: parseFloat(records[i]['total_ducks'] / records[i]['amount_foods']) });
+            for (var i = 0; i < records.length; i++) {
+                total_ducks.push({
+                    x: new Date(moment(records[i]['day']).format('YYYY,MM,DD')),
+                    y: records[i]['total_ducks']
+                });
+                total_feed.push({
+                    x: new Date(moment(records[i]['day']).format('YYYY,MM,DD')),
+                    y: records[i]['amount_foods']
+                });
+                average_feed.push({
+                    x: new Date(moment(records[i]['day']).format('YYYY,MM,DD')),
+                    y: parseFloat(records[i]['total_ducks'] / records[i]['amount_foods'])
+                });
             }
 
-                var chart = new CanvasJS.Chart("chartContainer", {
+            var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
-                title:{
+                title: {
                     text: "Daily Ducks Feeding Around The World"
                 },
                 axisX: {
@@ -198,12 +211,12 @@
                     title: "Total Feed",
                     includeZero: true
                 },
-                legend:{
+                legend: {
                     cursor: "pointer",
                     fontSize: 16,
                     itemclick: toggleDataSeries
                 },
-                toolTip:{
+                toolTip: {
                     shared: true
                 },
                 data: [{
@@ -229,11 +242,10 @@
             });
             chart.render();
 
-            function toggleDataSeries(e){
-                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+            function toggleDataSeries(e) {
+                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
                     e.dataSeries.visible = false;
-                }
-                else{
+                } else {
                     e.dataSeries.visible = true;
                 }
                 chart.render();
