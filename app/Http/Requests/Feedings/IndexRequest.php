@@ -12,6 +12,7 @@ class IndexRequest extends FormRequest
             'food_type_id' => 'nullable|exists:food_types,id',
             'food_id' => 'nullable|exists:foods,id',
             'location_id' => 'nullable|exists:locations,id',
+            'display_all' => 'nullable',
         ];
     }
 }

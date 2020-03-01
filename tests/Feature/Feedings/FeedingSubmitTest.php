@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Feedings;
 
-use App\Feeding;
 use App\Food;
 use App\Location;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -32,13 +31,13 @@ class FeedingSubmitTest extends TestCase
             'location_id' => $this->location->id,
             'feeding_time' => date('Y-m-d H:i:s'),
             'total_ducks' => 500,
-            'amount_foods' => 50
+            'amount_foods' => 50,
+            'daily_recurring' => false,
         ];
         $response = $this->post(route('feedings.submit'), $feed);
-
         $response->assertStatus(Response::HTTP_FOUND);
 
-        $response = $this->getJson('/feedings/overview');
+        $response = $this->get('/feedings/overview?display_all=yes');
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeText('Daily Feedings');
         $response->assertSeeText(500);

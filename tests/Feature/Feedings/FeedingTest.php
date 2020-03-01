@@ -26,19 +26,22 @@ class FeedingTest extends TestCase
 
     public function test_index_should_have_correct_contents()
     {
-        factory(Feeding::class, 2)->create([
+        $data = [
             'food_type_id' => $this->food->food_type_id,
             'food_id' => $this->food->id,
             'location_id' => $this->location->id,
             'feeding_time' => date('Y-m-d H:i:s'),
-            'total_ducks' => 50
-        ]);
+            'total_ducks' => 550,
+            'amount_foods' => 50,
+            'daily_recurring' => false
+        ];
+        factory(Feeding::class, 2)->create($data);
 
-        $response = $this->getJson('/feedings/overview');
+        $response = $this->get('/feedings/overview?display_all=yes');
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeText('Daily Feedings');
-        $response->assertSeeText(50);
+        $response->assertSeeText(550);
     }
 
     /**
