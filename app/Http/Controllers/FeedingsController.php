@@ -86,6 +86,10 @@ class FeedingsController extends Controller
             $graph_records = $graph_records->whereRaw("DATE(CURDATE()) = DATE(feeding_time)");
         }
 
+        if (!empty($properties['start_date']) && !empty($properties['end_date'])) {
+            $graph_records = $graph_records->whereBetween("feeding_time", [$properties['start_date'], $properties['end_date']]);
+        }
+
         $graph_records = $graph_records->groupBy('day')->get();
 
         return view('feedings.index', [
