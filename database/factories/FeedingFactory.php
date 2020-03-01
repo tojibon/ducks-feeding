@@ -15,7 +15,7 @@ $factory->define(Feeding::class, function (Faker $faker) {
         'location_id' => factory(App\Location::class)->create()->id,
         'total_ducks' => $faker->numberBetween(10,200),
         'amount_foods' => $faker->randomFloat($nbMaxDecimals = NULL, $min = 2, $max = 50),
-        'feeding_time' => $faker->dateTime($max = 'now', $timezone = null),
+        'feeding_time' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null),
         'daily_recurring' => $faker->boolean($chanceOfGettingTrue = 30),
     ];
 });

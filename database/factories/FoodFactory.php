@@ -8,6 +8,6 @@ use Faker\Generator as Faker;
 $factory->define(Food::class, function (Faker $faker) {
     return [
         'food_type_id' => factory(App\FoodType::class)->create()->id,
-        'name' => ucfirst($faker->unique()->word),
+        'name' => ucfirst($faker->word),
     ];
 });
