@@ -56,13 +56,20 @@ class FeedingsController extends Controller
 
     public function index(IndexRequest $request)
     {
+        $locations = $this->locations->filter($request->all());
+        $food_types = $this->food_types->filter($request->all());
+        $foods = $this->foods->filter($request->all());
+
         $records = $this->feedings->withCriteria(
             new EagerLoad('food_type', 'food', 'location'),
             new OrderBy('created_at', 'desc')
         )->filter($request->validated());
 
         return view('feedings.index', [
-            'records' => FeedingResource::collection($records)
+            'records' => FeedingResource::collection($records),
+            'locations' => LocationResource::collection($locations),
+            'food_types' => FoodTypeResource::collection($food_types),
+            'foods' => FoodResource::collection($foods)
         ]);
     }
 

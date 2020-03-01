@@ -24,6 +24,10 @@ class EloquentFeedingRepository extends EloquentRepository implements FeedingRep
             $this->entity = $this->entity->where('food_id', $properties['food_id']);
         }
 
+        if (isset($properties['location_id'])) {
+            $this->entity = $this->entity->where('location_id', $properties['location_id']);
+        }
+
         if (empty($properties['display_all']) && !(!empty($properties['start_date']) && !empty($properties['end_date']))) {
             $this->entity = $this->entity->whereRaw("DATE(CURDATE()) = DATE(feeding_time)");
         }
@@ -37,6 +41,7 @@ class EloquentFeedingRepository extends EloquentRepository implements FeedingRep
             'end_date' => !empty($properties['end_date']) ? $properties['end_date'] : '',
             'food_type_id' => !empty($properties['food_type_id']) ? $properties['food_type_id'] : '',
             'food_id' => !empty($properties['food_id']) ? $properties['food_id'] : '',
+            'location_id' => !empty($properties['location_id']) ? $properties['location_id'] : '',
             'display_all'=>!empty($properties['display_all']) ? $properties['display_all'] : '',
         ]);
     }
