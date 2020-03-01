@@ -13,6 +13,8 @@ class IndexRequest extends FormRequest
             'food_id' => 'nullable|exists:foods,id',
             'location_id' => 'nullable|exists:locations,id',
             'display_all' => 'nullable',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
         ];
     }
 }
