@@ -165,7 +165,7 @@
                 if (current_query_string[1]) {
                     var current_query_arr = current_query_string[1].split('&');
                     for(var i=0; i<current_query_arr.length; i++) {
-                        if (current_query_arr[i].indexOf('date') > 0 || current_query_arr[i].indexOf('id') > 0) {
+                        if (current_query_arr[i].indexOf('date') > 0 || current_query_arr[i].indexOf('id') > 0 || current_query_arr[i].indexOf('page') > 0) {
                         } else {
                             current_query_string_append.push(current_query_arr[i]);
                         }
